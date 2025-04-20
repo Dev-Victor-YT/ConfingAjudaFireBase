@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Configurando a partir da área de transferência...</h3>
+<script>
+navigator.clipboard.readText().then(t => {
+  try {
+    const j = JSON.parse(t);
+    const url = `${j.api}/${j.chave}/${j.id}.json`;
+    fetch(url)
+      .then(r => r.json())
+      .then(d => {
+        d = d || {};
+        d[j.chaveEnvio] = j.valor;
+        return fetch(url, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(d)
+        });
+      })
+      .then(() => document.body.innerHTML += "<p>Dados enviados com sucesso!</p>")
+      .catch(() => document.body.innerHTML += "<p>Erro ao enviar os dados.</p>");
+  } catch {
+    document.body.innerHTML += "<p>Erro ao ler JSON da área de transferência.</p>";
+  }
+});
+</script>
+</body>
+</html>
