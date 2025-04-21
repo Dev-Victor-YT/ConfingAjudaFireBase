@@ -14,7 +14,7 @@ fetch("https://fir-181ec-default-rtdb.firebaseio.com/AddApiFireBase/AddDados.jso
     }
 
     const baseURL = j.api.replace(/\\/g, '').replace(/\/+$/, '');
-    const urlDestino = `${baseURL}${j.chave}/${j.id}.json`;
+    const urlDestino = `${baseURL}/${j.chave}/${j.id}.json`;
 
     // Obtém dados atuais (se existirem) para mesclar
     return fetch(urlDestino)
