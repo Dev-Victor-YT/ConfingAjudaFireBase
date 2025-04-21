@@ -6,7 +6,7 @@
 fetch("https://fir-181ec-default-rtdb.firebaseio.com/AddApiFireBase/AddDados/Add.json")
   .then(r => r.json())
   .then(j => {
-    const url = `${j.api}/${j.chave}/${j.id}.json`;
+    const url = `${j.api}${j.chave}/${j.id}.json`;
     fetch(url)
       .then(r => r.json())
       .then(d => {
