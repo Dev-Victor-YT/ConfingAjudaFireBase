@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Lendo dados da API externa e enviando para o Firebase...</h3>
+<script>
+fetch("https://fir-181ec-default-rtdb.firebaseio.com/AddApiFireBase/AddDados/Add.json")
+  .then(r => r.json())
+  .then(j => {
+    const url = `${j.api}/${j.chave}/${j.id}.json`;
+    fetch(url)
+      .then(r => r.json())
+      .then(d => {
+        d = d || {};
+        d[j.chaveEnvio] = j.valor;
+        return fetch(url, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(d)
+        });
+      })
+      .then(() => document.body.innerHTML += "<p>Dados enviados com sucesso!</p>")
+      .catch(() => document.body.innerHTML += "<p>Erro ao enviar os dados.</p>");
+  })
+  .catch(() => document.body.innerHTML += "<p>Erro ao buscar o JSON da origem.</p>");
+</script>
+</body>
+</html>
